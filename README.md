@@ -16,3 +16,13 @@ To do's:
 * Find a better DB source
 * Find solutions that are more multi-platform
 * Fix reported bugs
+
+Download Details:
+
+* Download link  - [MKEllie](https://mega.nz/#!aZFjxDzD!49zmDTGh-QMzTvzaVABCPtPY5gloNAWqaVY-cBgPTaU)
+* MD5 Hash - 47893C8DC3CF8665FBFB89D00EAE96E5
+
+Portable:
+
+* Portable Download Link (zip) - [MKEllie_portable](https://mega.nz/#!qBcF0KTY!acT0kQkCBZ8_8rG34u4UwlsKOU6VXOjwLfTHqGuAeUU)
+* MD5 Hash - DD3EABCCEF08F2848FA30510BF7ADE93
