@@ -1,0 +1,8 @@
+C:\Users\anewa\Documents\Visual Studio 2015\Projects\MKEllie\MKEllie\bin\Release\MKEllie.exe.config
+C:\Users\anewa\Documents\Visual Studio 2015\Projects\MKEllie\MKEllie\bin\Release\MKEllie.exe
+C:\Users\anewa\Documents\Visual Studio 2015\Projects\MKEllie\MKEllie\bin\Release\MKEllie.pdb
+C:\Users\anewa\Documents\Visual Studio 2015\Projects\MKEllie\MKEllie\obj\Release\MKNaomi.frmMKEllie.resources
+C:\Users\anewa\Documents\Visual Studio 2015\Projects\MKEllie\MKEllie\obj\Release\MKEllie.Properties.Resources.resources
+C:\Users\anewa\Documents\Visual Studio 2015\Projects\MKEllie\MKEllie\obj\Release\MKEllie.csproj.GenerateResource.Cache
+C:\Users\anewa\Documents\Visual Studio 2015\Projects\MKEllie\MKEllie\obj\Release\MKEllie.exe
+C:\Users\anewa\Documents\Visual Studio 2015\Projects\MKEllie\MKEllie\obj\Release\MKEllie.pdb
