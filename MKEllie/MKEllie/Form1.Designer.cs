@@ -33,6 +33,7 @@
             this.grpGames = new System.Windows.Forms.GroupBox();
             this.lstGamesList = new System.Windows.Forms.ListBox();
             this.grpGameDetails = new System.Windows.Forms.GroupBox();
+            this.pctBoxArt = new System.Windows.Forms.PictureBox();
             this.lblGameInfo = new System.Windows.Forms.Label();
             this.grpOperations = new System.Windows.Forms.GroupBox();
             this.lbl3DSIP = new System.Windows.Forms.Label();
@@ -43,8 +44,10 @@
             this.lblStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.fbdRomPath = new System.Windows.Forms.FolderBrowserDialog();
             this.tmrColorChange = new System.Windows.Forms.Timer(this.components);
+            this.printDialog1 = new System.Windows.Forms.PrintDialog();
             this.grpGames.SuspendLayout();
             this.grpGameDetails.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pctBoxArt)).BeginInit();
             this.grpOperations.SuspendLayout();
             this.strStatusStrip.SuspendLayout();
             this.SuspendLayout();
@@ -64,12 +67,14 @@
             this.lstGamesList.FormattingEnabled = true;
             this.lstGamesList.Location = new System.Drawing.Point(6, 19);
             this.lstGamesList.Name = "lstGamesList";
+            this.lstGamesList.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
             this.lstGamesList.Size = new System.Drawing.Size(431, 537);
             this.lstGamesList.TabIndex = 0;
             this.lstGamesList.SelectedIndexChanged += new System.EventHandler(this.lstGamesList_SelectedIndexChanged);
             // 
             // grpGameDetails
             // 
+            this.grpGameDetails.Controls.Add(this.pctBoxArt);
             this.grpGameDetails.Controls.Add(this.lblGameInfo);
             this.grpGameDetails.Location = new System.Drawing.Point(461, 12);
             this.grpGameDetails.Name = "grpGameDetails";
@@ -78,11 +83,22 @@
             this.grpGameDetails.TabStop = false;
             this.grpGameDetails.Text = "Game Details";
             // 
+            // pctBoxArt
+            // 
+            this.pctBoxArt.BackgroundImage = global::MKEllie.Properties.Resources._3dsLogo;
+            this.pctBoxArt.InitialImage = ((System.Drawing.Image)(resources.GetObject("pctBoxArt.InitialImage")));
+            this.pctBoxArt.Location = new System.Drawing.Point(89, 19);
+            this.pctBoxArt.Name = "pctBoxArt";
+            this.pctBoxArt.Size = new System.Drawing.Size(164, 130);
+            this.pctBoxArt.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pctBoxArt.TabIndex = 1;
+            this.pctBoxArt.TabStop = false;
+            // 
             // lblGameInfo
             // 
-            this.lblGameInfo.Location = new System.Drawing.Point(6, 19);
+            this.lblGameInfo.Location = new System.Drawing.Point(28, 152);
             this.lblGameInfo.Name = "lblGameInfo";
-            this.lblGameInfo.Size = new System.Drawing.Size(330, 243);
+            this.lblGameInfo.Size = new System.Drawing.Size(269, 123);
             this.lblGameInfo.TabIndex = 0;
             this.lblGameInfo.Text = "Select a game to display information";
             this.lblGameInfo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -158,6 +174,10 @@
             this.tmrColorChange.Interval = 1000;
             this.tmrColorChange.Tick += new System.EventHandler(this.tmrColorChange_Tick);
             // 
+            // printDialog1
+            // 
+            this.printDialog1.UseEXDialog = true;
+            // 
             // frmMKEllie
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -173,6 +193,7 @@
             this.Load += new System.EventHandler(this.frmMKEllie_Load);
             this.grpGames.ResumeLayout(false);
             this.grpGameDetails.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pctBoxArt)).EndInit();
             this.grpOperations.ResumeLayout(false);
             this.grpOperations.PerformLayout();
             this.strStatusStrip.ResumeLayout(false);
@@ -197,6 +218,8 @@
         private System.Windows.Forms.Label lbl3DSIP;
         private System.Windows.Forms.TextBox txt3DSIP;
         private System.Windows.Forms.Timer tmrColorChange;
+        private System.Windows.Forms.PictureBox pctBoxArt;
+        private System.Windows.Forms.PrintDialog printDialog1;
     }
 }
 

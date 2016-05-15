@@ -90,6 +90,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Data\3dsreleases.xml" />
+    <None Include="Images\3dsLogo.jpg" />
     <Content Include="MKEllie.ico" />
     <Content Include="Sockfile\sockfile.jar" />
   </ItemGroup>

@@ -7,6 +7,7 @@ using System.Data;
 using System.Configuration;
 using System.Diagnostics;
 using System.Threading;
+using System.Drawing;
 
 namespace MKNaomi
 {
@@ -30,6 +31,9 @@ namespace MKNaomi
                 string publisher = string.Empty;
                 string firmware = string.Empty;
                 string serial = string.Empty;
+                string shortSerial = string.Empty;
+                string region = string.Empty;
+                string shortRegion = string.Empty;
                 int largestIndex = 0;
                 int largestValue = -1;
                 double confidence = 0.0;
@@ -39,7 +43,6 @@ namespace MKNaomi
                 DataSet ds = new DataSet();
                 ds.ReadXml(xmlFile);
                 DataTable dt = ds.Tables[0];
-                //dgGameDetails.DataSource = dt;
                 //see how many of the name parts match the current game in the array
                 for (int i = 0; i < dt.Rows.Count; i++)
                 {
@@ -84,10 +87,37 @@ namespace MKNaomi
                 publisher = dt.Rows[largestIndex]["publisher"].ToString();
                 firmware = dt.Rows[largestIndex]["firmware"].ToString();
                 serial = dt.Rows[largestIndex]["serial"].ToString();
+                region = dt.Rows[largestIndex]["region"].ToString();
+                shortSerial = serial.Substring(serial.Length - 4);
+                if (!File.Exists("\\Images\\" + shortSerial + ".jpg"))
+                {
+                    WebClient wc = new WebClient();
+                    //download latest XML from 3dsdb.com
+                    try
+                    {
+                        lblStatus.Text = "No boxart found locally, downloading";
+                        wc.DownloadFile("http://art.gametdb.com/3ds/coverHQ/EN/" + shortSerial + ".jpg", Environment.CurrentDirectory + "\\Temp\\" + shortSerial + ".jpg");
+                        //copy to working data folder                    
+                        File.Copy(Environment.CurrentDirectory + "\\Temp\\" + shortSerial + ".jpg", Environment.CurrentDirectory + "\\Images\\" + shortSerial + ".jpg", true);
+                        File.Delete(Environment.CurrentDirectory + "\\Temp\\" + shortSerial + ".jpg");
+                    }
+                    catch
+                    {
+                        //FileInfo fi = new FileInfo(Environment.CurrentDirectory + "\\Data\\3dsreleases.xml");
+                        //fileDate = fi.CreationTime.ToShortDateString();
+                        MessageBox.Show("Error downloading the box art");
+                    }
+                }
+               
+                    Image image = Image.FromFile(Environment.CurrentDirectory + "\\Images\\" + shortSerial + ".jpg");
+                    pctBoxArt.Image = image;
+                lblStatus.Text = "Boxart download complete!";
                 //make a confidence meter as the data we have isn't very clean and ww want to make sure the user knows
                 confidence = (Convert.ToDouble(largestValue) / Convert.ToDouble(nameParts.Length)) * 100;
+                confidence = Math.Round(confidence, 2);
                 lblGameInfo.Text = "Name: " + name + "\r\n Publisher: " + publisher + "\r\n Serial: " + serial + "\r\n Firmware: " + firmware+"\r\n Match Confidence:: "+confidence+"%";
                 //dgGameDetails.DataSource = ds.Tables[0];
+                lblStatus.Text = "Information loaded for "+lstGamesList.Text;
             }
             catch (Exception ex)
             {
@@ -98,12 +128,24 @@ namespace MKNaomi
 
         private void lstGamesList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            xmlDBRead(lstGamesList.Text);
+            if (lstGamesList.SelectedItems.Count == 1)
+            {
+                xmlDBRead(lstGamesList.Text);
+            }
+            else
+            {
+                Image image = Image.FromFile(Environment.CurrentDirectory + "\\Images\\3dsLogo.jpg");
+                pctBoxArt.Image = image;
+                lblGameInfo.Text = "Multiple Games Selected";
+                lblStatus.Text = lstGamesList.SelectedItems.Count + " games selected"; 
+           
+            }
         }
 
         private void frmMKEllie_Load(object sender, EventArgs e)
         {
-
+            Image image = Image.FromFile(Environment.CurrentDirectory + "\\Images\\3dsLogo.jpg");
+            pctBoxArt.Image = image;
             string gameName = string.Empty;
             string fileDate = "1/1/2001";
             string romPath = ConfigurationManager.AppSettings["romPath"];
@@ -230,6 +272,11 @@ namespace MKNaomi
         private void tmrColorChange_Tick(object sender, EventArgs e)
         {
             lblStatus.ForeColor = System.Drawing.Color.Black;
-        }        
+        }
+
+        private void btnUpdateImages_Click(object sender, EventArgs e)
+        {
+            //http://www.gametdb.com/download.php?FTP=GameTDB-3ds_box-US-2016-05-11.zip
+        }
     }
 }
