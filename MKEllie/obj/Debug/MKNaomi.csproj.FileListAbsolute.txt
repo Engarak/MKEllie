@@ -1,0 +1,9 @@
+c:\users\anewa\documents\visual studio 2015\Projects\MKNaomi\MKNaomi\obj\Debug\MKNaomi.csprojResolveAssemblyReference.cache
+c:\users\anewa\documents\visual studio 2015\Projects\MKNaomi\MKNaomi\obj\Debug\MKNaomi.frmMKNaomi.resources
+c:\users\anewa\documents\visual studio 2015\Projects\MKNaomi\MKNaomi\obj\Debug\MKNaomi.csproj.GenerateResource.Cache
+c:\users\anewa\documents\visual studio 2015\Projects\MKNaomi\MKNaomi\bin\Debug\MKEllie.exe.config
+c:\users\anewa\documents\visual studio 2015\Projects\MKNaomi\MKNaomi\bin\Debug\MKEllie.exe
+c:\users\anewa\documents\visual studio 2015\Projects\MKNaomi\MKNaomi\bin\Debug\MKEllie.pdb
+c:\users\anewa\documents\visual studio 2015\Projects\MKNaomi\MKNaomi\obj\Debug\MKEllie.Properties.Resources.resources
+c:\users\anewa\documents\visual studio 2015\Projects\MKNaomi\MKNaomi\obj\Debug\MKEllie.exe
+c:\users\anewa\documents\visual studio 2015\Projects\MKNaomi\MKNaomi\obj\Debug\MKEllie.pdb
