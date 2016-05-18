@@ -29,7 +29,7 @@ namespace MKNaomi
                 gameName = gameName.Replace('_', '.');
                 gameName = gameName.Replace(' ', '.');
                 string[] nameParts = gameName.Split('.');
-                int[] matchValue = new int[5000];
+                int[] matchValue = new int[9000];
                 //define variables to send to the DataGrid
                 string name = string.Empty;
                 string serial = string.Empty;
@@ -37,6 +37,9 @@ namespace MKNaomi
                 int largestIndex = 0;
                 int largestValue = -1;
                 double confidence = 0.0;
+                bool[] matching = new bool[9000];
+                bool success = false;
+                int matchCount = 0;
                 //Read XML File and load to DataSet
                 XmlReader xmlFile;
                 xmlFile = XmlReader.Create(Environment.CurrentDirectory + "\\Data\\3dsreleases.xml", new XmlReaderSettings());
@@ -46,12 +49,11 @@ namespace MKNaomi
                 //see how many of the name parts match the current game in the array
                 for (int i = 0; i < dt.Rows.Count; i++)
                 {
-                    bool[] matching = new bool[50];
-                    int matchCount = 0;
                     for (int j = 0; j < nameParts.Length; j++)
                     {
                         string nameStore = dt.Rows[i]["name"].ToString();
-                        if (nameStore.Contains(nameParts[j]))
+                        region = dt.Rows[i]["region"].ToString();
+                        if (nameStore.Contains(nameParts[j])&& region==cboCountry.Text)
                         {
                             matching[j] = true;
 
@@ -62,15 +64,51 @@ namespace MKNaomi
                         }
                     }
                     //count how many words match
+                    
+                    
                     for (int k = 0; k < nameParts.Length; k++)
                     {
+                        
                         if (matching[k] == true)
                         {
                             matchCount++;
+                            success = true;
                         }
                     }
                     matchValue[i] = matchCount;
                     matchCount = 0;
+                }
+                //bool success = allIsFalse(matching);
+                if (success == false)
+                {
+                    for (int i = 0; i < dt.Rows.Count; i++)
+                    {
+                        for (int j = 0; j < nameParts.Length; j++)
+                        {
+                            string nameStore = dt.Rows[i]["name"].ToString();
+                            if (nameStore.Contains(nameParts[j]) && !(nameStore.ToUpper().Contains("DEMO")))
+                            {
+                                matching[j] = true;
+
+                            }
+                            else
+                            {
+                                matching[j] = false;
+                            }
+                        }
+                        //count how many words match
+
+                        for (int k = 0; k < nameParts.Length; k++)
+                        {
+
+                            if (matching[k] == true)
+                            {
+                                matchCount++;
+                            }
+                        }
+                        matchValue[i] = matchCount;
+                        matchCount = 0;
+                    }
                 }
                 //get highest amount of words that match (not great match if game isn't named well, but clean file names are necessary)
                 for (int l = 0; l < matchValue.Length; l++)
@@ -145,29 +183,6 @@ namespace MKNaomi
                             {
                                 Application.DoEvents();
                             } while (threadRunning == true);
-                            //try
-                            //{
-                            //    wc.DownloadFile("http://art.gametdb.com/3ds/coverHQ/" + shortRegion + "/" + shortSerial + ".jpg", Environment.CurrentDirectory + "\\Temp\\" + shortSerial + ".jpg");
-                            //    //copy to working data folder                    
-                            //    File.Copy(Environment.CurrentDirectory + "\\Temp\\" + shortSerial + ".jpg", Environment.CurrentDirectory + "\\Images\\" + shortSerial + ".jpg", true);
-                            //    File.Delete(Environment.CurrentDirectory + "\\Temp\\" + shortSerial + ".jpg");
-                            //}
-                            //catch
-                            //{
-                            //    try
-                            //    {
-                            //        wc.DownloadFile("http://art.gametdb.com/3ds/coverM/" + shortRegion + "/" + shortSerial + ".jpg", Environment.CurrentDirectory + "\\Temp\\" + shortSerial + ".jpg");
-                            //        //copy to working data folder                    
-                            //        File.Copy(Environment.CurrentDirectory + "\\Temp\\" + shortSerial + ".jpg", Environment.CurrentDirectory + "\\Images\\" + shortSerial + ".jpg", true);
-                            //        File.Delete(Environment.CurrentDirectory + "\\Temp\\" + shortSerial + ".jpg");
-                            //    }
-                            //    catch
-                            //    {
-
-                            //        lblStatus.Text = "No box art found.";
-                            //        shortRegion = "NA";
-                            //    }
-                            //}
                         }
                     }
                     catch
@@ -201,7 +216,23 @@ namespace MKNaomi
                 MessageBox.Show(ex.ToString());
             }
         }
-
+        public static bool allIsFalse(bool[] toCheck)
+        {
+            bool success = true;
+            int countTrue = 0;
+            for(int i=0;i<toCheck.Length; i++)
+            {
+                if(toCheck[i]==true)
+                {
+                    countTrue++;
+                }
+            }
+            if(countTrue>0)
+            {
+                success = false;
+            }
+            return success;
+        }
         private void downloadImage()
         {
             WebClient wc = new WebClient();
@@ -233,18 +264,20 @@ namespace MKNaomi
 
         private void lstGamesList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (lstGamesList.SelectedItems.Count == 1)
-            {
-                xmlDBRead(lstGamesList.Text);
-            }
-            else
-            {
-                Image image = Image.FromFile(Environment.CurrentDirectory + "\\Images\\3dsLogo.jpg");
-                pctBoxArt.Image = image;
-                lblGameInfo.Text = "Multiple Games Selected";
-                lblStatus.Text = lstGamesList.SelectedItems.Count + " games selected"; 
+            //if (lstGamesList.SelectedItems.Count == 1 && threadRunning == false) 
+            //{
+            int items = lstGamesList.SelectedItems.Count;
+            items--;
+            xmlDBRead(lstGamesList.SelectedItems[items].ToString());
+            //}
+            //else
+            //{
+            //    Image image = Image.FromFile(Environment.CurrentDirectory + "\\Images\\3dsLogo.jpg");
+            //    pctBoxArt.Image = image;
+            //    lblGameInfo.Text = "Multiple Games Selected";
+            //    lblStatus.Text = lstGamesList.SelectedItems.Count + " games selected"; 
            
-            }
+            //}
         }
 
         private void frmMKEllie_Load(object sender, EventArgs e)
@@ -345,19 +378,20 @@ namespace MKNaomi
                     {
                         if (selectedCount == 0)
                         {
-                            gamesToSend = romPath + "\\"+selectedItem.ToString()+ @"""";
+                            gamesToSend = romPath + "\\" + selectedItem.ToString() + @"""";
                         }
                         else
                         {
-                            gamesToSend = gamesToSend + " " + romPath + "\\" + selectedItem.ToString()+ @"""";
-                            
+                            gamesToSend = gamesToSend + " " + romPath + "\\" + selectedItem.ToString() + @"""";
+
                         }
                         selectedCount++;
-                    }                    
+                    }
                     string jarPath = @"""" + Environment.CurrentDirectory + @"\Sockfile\sockfile.jar""";
                     string argumensForJar = txt3DSIP.Text + " " + gamesToSend;
                     Process clientProcess = new Process();
                     string sendArguments = @"-cp . -jar " + jarPath + " " + argumensForJar;
+
                     clientProcess.StartInfo.FileName = "java";
                     clientProcess.StartInfo.Arguments = sendArguments;
                     clientProcess.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
@@ -382,6 +416,7 @@ namespace MKNaomi
                     {
                         lblStatus.Text = "Finished sending " + lstGamesList.SelectedItems.Count + " games To 2DS/3DS at " + txt3DSIP.Text + ".  Check 2DS/3DS for details.";
                     }
+
                 }
                 catch (Exception exc)
                 {
@@ -390,8 +425,7 @@ namespace MKNaomi
                 }
             }
             else
-            {
-                
+            {                
                 lblStatus.Text = "Please make sure you've set a vaild rom path, selected a game and changed the IP to the one shown on the 2DS/3DS";
                 lblStatus.ForeColor = System.Drawing.Color.Red;
                 tmrColorChange.Start();
@@ -401,6 +435,27 @@ namespace MKNaomi
         {
             lblStatus.ForeColor = System.Drawing.Color.Black;
         }
-        
+
+        private void cboCountry_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string ProviderKey = "country";
+            Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            config.AppSettings.Settings[ProviderKey].Value = cboCountry.Text;
+            config.Save();
+            ConfigurationManager.RefreshSection("appSettings");
+            //load path and re-fill list box
+            string romPath = ConfigurationManager.AppSettings["country"];
+            if (lstGamesList.SelectedItems.Count > 0)
+            {
+                int items = lstGamesList.SelectedItems.Count;
+                items--;
+                xmlDBRead(lstGamesList.SelectedItems[items].ToString());
+            }
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
