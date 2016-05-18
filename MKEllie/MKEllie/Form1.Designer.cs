@@ -45,6 +45,8 @@
             this.fbdRomPath = new System.Windows.Forms.FolderBrowserDialog();
             this.tmrColorChange = new System.Windows.Forms.Timer(this.components);
             this.printDialog1 = new System.Windows.Forms.PrintDialog();
+            this.cboCountry = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.grpGames.SuspendLayout();
             this.grpGameDetails.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pctBoxArt)).BeginInit();
@@ -105,6 +107,8 @@
             // 
             // grpOperations
             // 
+            this.grpOperations.Controls.Add(this.label1);
+            this.grpOperations.Controls.Add(this.cboCountry);
             this.grpOperations.Controls.Add(this.lbl3DSIP);
             this.grpOperations.Controls.Add(this.txt3DSIP);
             this.grpOperations.Controls.Add(this.btnSendGame);
@@ -134,7 +138,7 @@
             // 
             // btnSendGame
             // 
-            this.btnSendGame.Location = new System.Drawing.Point(194, 135);
+            this.btnSendGame.Location = new System.Drawing.Point(194, 117);
             this.btnSendGame.Name = "btnSendGame";
             this.btnSendGame.Size = new System.Drawing.Size(112, 23);
             this.btnSendGame.TabIndex = 2;
@@ -144,7 +148,7 @@
             // 
             // btnRomPath
             // 
-            this.btnRomPath.Location = new System.Drawing.Point(31, 135);
+            this.btnRomPath.Location = new System.Drawing.Point(31, 117);
             this.btnRomPath.Name = "btnRomPath";
             this.btnRomPath.Size = new System.Drawing.Size(112, 23);
             this.btnRomPath.TabIndex = 1;
@@ -177,6 +181,36 @@
             // printDialog1
             // 
             this.printDialog1.UseEXDialog = true;
+            // 
+            // cboCountry
+            // 
+            this.cboCountry.FormattingEnabled = true;
+            this.cboCountry.Items.AddRange(new object[] {
+            "USA",
+            "EUR",
+            "TWN",
+            "JPN",
+            "KOR",
+            "ITA",
+            "FRA",
+            "GER",
+            "CHN"});
+            this.cboCountry.Location = new System.Drawing.Point(31, 207);
+            this.cboCountry.Name = "cboCountry";
+            this.cboCountry.Size = new System.Drawing.Size(275, 21);
+            this.cboCountry.TabIndex = 5;
+            this.cboCountry.Text = "USA";
+            this.cboCountry.SelectedIndexChanged += new System.EventHandler(this.cboCountry_SelectedIndexChanged);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(9, 178);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(101, 13);
+            this.label1.TabIndex = 6;
+            this.label1.Text = "Country Preference:";
+            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // frmMKEllie
             // 
@@ -220,6 +254,8 @@
         private System.Windows.Forms.Timer tmrColorChange;
         private System.Windows.Forms.PictureBox pctBoxArt;
         private System.Windows.Forms.PrintDialog printDialog1;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ComboBox cboCountry;
     }
 }
 
