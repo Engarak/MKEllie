@@ -125,10 +125,13 @@ namespace MKNaomi
                 serial = dt.Rows[largestIndex]["serial"].ToString();
                 region = dt.Rows[largestIndex]["region"].ToString();
                 shortSerial = serial.Substring(serial.Length - 4);
+                //string romPath = ConfigurationManager.AppSettings["romPath"];
+                //string filename = romPath + "\\" + gameName;
+                //string fileSize = sizeEstimate(filename);
                 if (!File.Exists("\\Images\\" + shortSerial + ".jpg"))
                 {
                     WebClient wc = new WebClient();
-                    //download latest XML from 3dsdb.com
+                    //download image if needed
                     try
                     {
                         if (region=="USA" || region=="ALL")
@@ -206,8 +209,8 @@ namespace MKNaomi
                 //make a confidence meter as the data we have isn't very clean and ww want to make sure the user knows
                 confidence = (Convert.ToDouble(largestValue) / Convert.ToDouble(nameParts.Length)) * 100;
                 confidence = Math.Round(confidence, 2);
-                lblGameInfo.Text = "Name: " + name + "\r\n Region: " + region + "\r\n Serial: " + serial + "\r\n Match Confidence: "+confidence+"%";
-                //dgGameDetails.DataSource = ds.Tables[0];
+                lblGameInfo.Text = "Name: " + name + "\r\n Region: " + region + "\r\n Serial: " + serial + "\r\n Match Confidence: " + confidence + "%";
+                //lblGameInfo.Text = "Name: " + name + "\r\n Region: " + region + "\r\n Serial: " + serial +"\r\n File Size:"+ fileSize + "\r\n Match Confidence: "+confidence+"%";
                 lblStatus.Text = "Information loaded for "+lstGamesList.Text;
             }
             catch (Exception ex)
@@ -264,20 +267,10 @@ namespace MKNaomi
 
         private void lstGamesList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //if (lstGamesList.SelectedItems.Count == 1 && threadRunning == false) 
-            //{
             int items = lstGamesList.SelectedItems.Count;
             items--;
             xmlDBRead(lstGamesList.SelectedItems[items].ToString());
-            //}
-            //else
-            //{
-            //    Image image = Image.FromFile(Environment.CurrentDirectory + "\\Images\\3dsLogo.jpg");
-            //    pctBoxArt.Image = image;
-            //    lblGameInfo.Text = "Multiple Games Selected";
-            //    lblStatus.Text = lstGamesList.SelectedItems.Count + " games selected"; 
-           
-            //}
+            
         }
 
         private void frmMKEllie_Load(object sender, EventArgs e)
@@ -356,10 +349,30 @@ namespace MKNaomi
                 tmrColorChange.Start();
             }
         }
+        private string sizeEstimate(string filename)
+        {
+            string[] sizes = { "B", "KB", "MB", "GB" };
+            FileInfo fi = new FileInfo(filename);
+            double len = fi.Length;
+            int order = 0;
+            while (len >= 1024 && order + 1 < sizes.Length)
+            {
+                order++;
+                len = len / 1024;
+            }
 
+            // Adjust the format string to your preferences. For example "{0:0.#}{1}" would
+            // show a single decimal place, and no space.
+            string result = String.Format("{0:0.##} {1}", len, sizes[order]);
+            return result;
+        }
         private void btnSendGame_Click(object sender, EventArgs e)
         {
-
+            lstGamesList.Enabled = false;
+            cboCountry.Enabled = false;
+            txt3DSIP.Enabled = false;
+            btnSendGame.Enabled = false;
+            btnRomPath.Enabled = false;
             string hostName = Dns.GetHostName();
             string myIP = Dns.GetHostByName(hostName).AddressList[0].ToString();
             string ProviderKey = "3dsIP";
@@ -391,7 +404,8 @@ namespace MKNaomi
                     string argumensForJar = txt3DSIP.Text + " " + gamesToSend;
                     Process clientProcess = new Process();
                     string sendArguments = @"-cp . -jar " + jarPath + " " + argumensForJar;
-
+                    int tempCount = 0;
+                    int placeholder = 0;
                     clientProcess.StartInfo.FileName = "java";
                     clientProcess.StartInfo.Arguments = sendArguments;
                     clientProcess.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
@@ -404,9 +418,19 @@ namespace MKNaomi
                     pname = Process.GetProcessesByName("java");
                     while (pname.Length >= javaRunningCount && pname.Length != 0)
                     {
-                        lblStatus.Text = "Sending " + lstGamesList.Text + " To 2DS/3DS at " + txt3DSIP.Text;
+                        if(tempCount==lstGamesList.SelectedItems.Count)
+                        {
+                            tempCount = 0;
+                        }                        
+                        lblStatus.Text = "Sending " + lstGamesList.SelectedItems[tempCount].ToString() + " To 2DS/3DS at " + txt3DSIP.Text;
                         Application.DoEvents();
                         pname = Process.GetProcessesByName("java");
+                        placeholder++;
+                        if (placeholder == 1000)
+                        {
+                            tempCount++;
+                            placeholder = 0;
+                        }
                     }
                     if (lstGamesList.SelectedItems.Count == 1)
                     {
@@ -430,6 +454,11 @@ namespace MKNaomi
                 lblStatus.ForeColor = System.Drawing.Color.Red;
                 tmrColorChange.Start();
             }
+            lstGamesList.Enabled = true;
+            cboCountry.Enabled = true;
+            txt3DSIP.Enabled = true;
+            btnSendGame.Enabled = true;
+            btnRomPath.Enabled = true;
         }
         private void tmrColorChange_Tick(object sender, EventArgs e)
         {

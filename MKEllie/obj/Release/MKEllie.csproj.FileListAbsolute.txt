@@ -6,4 +6,3 @@ C:\Users\anewa\Documents\Visual Studio 2015\Projects\MKEllie\MKEllie\obj\Release
 C:\Users\anewa\Documents\Visual Studio 2015\Projects\MKEllie\MKEllie\obj\Release\MKEllie.csproj.GenerateResource.Cache
 C:\Users\anewa\Documents\Visual Studio 2015\Projects\MKEllie\MKEllie\obj\Release\MKEllie.exe
 C:\Users\anewa\Documents\Visual Studio 2015\Projects\MKEllie\MKEllie\obj\Release\MKEllie.pdb
-C:\Users\anewa\Documents\Visual Studio 2015\Projects\MKEllie\MKEllie\obj\Release\MKEllie.csprojResolveAssemblyReference.cache

@@ -36,6 +36,8 @@
             this.pctBoxArt = new System.Windows.Forms.PictureBox();
             this.lblGameInfo = new System.Windows.Forms.Label();
             this.grpOperations = new System.Windows.Forms.GroupBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.cboCountry = new System.Windows.Forms.ComboBox();
             this.lbl3DSIP = new System.Windows.Forms.Label();
             this.txt3DSIP = new System.Windows.Forms.TextBox();
             this.btnSendGame = new System.Windows.Forms.Button();
@@ -45,8 +47,6 @@
             this.fbdRomPath = new System.Windows.Forms.FolderBrowserDialog();
             this.tmrColorChange = new System.Windows.Forms.Timer(this.components);
             this.printDialog1 = new System.Windows.Forms.PrintDialog();
-            this.cboCountry = new System.Windows.Forms.ComboBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.grpGames.SuspendLayout();
             this.grpGameDetails.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pctBoxArt)).BeginInit();
@@ -120,6 +120,36 @@
             this.grpOperations.TabStop = false;
             this.grpOperations.Text = "Operations";
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(9, 178);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(101, 13);
+            this.label1.TabIndex = 6;
+            this.label1.Text = "Country Preference:";
+            this.label1.Click += new System.EventHandler(this.label1_Click);
+            // 
+            // cboCountry
+            // 
+            this.cboCountry.FormattingEnabled = true;
+            this.cboCountry.Items.AddRange(new object[] {
+            "USA",
+            "EUR",
+            "TWN",
+            "JPN",
+            "KOR",
+            "ITA",
+            "FRA",
+            "GER",
+            "CHN"});
+            this.cboCountry.Location = new System.Drawing.Point(31, 207);
+            this.cboCountry.Name = "cboCountry";
+            this.cboCountry.Size = new System.Drawing.Size(275, 21);
+            this.cboCountry.TabIndex = 5;
+            this.cboCountry.Text = "USA";
+            this.cboCountry.SelectedIndexChanged += new System.EventHandler(this.cboCountry_SelectedIndexChanged);
+            // 
             // lbl3DSIP
             // 
             this.lbl3DSIP.AutoSize = true;
@@ -142,7 +172,7 @@
             this.btnSendGame.Name = "btnSendGame";
             this.btnSendGame.Size = new System.Drawing.Size(112, 23);
             this.btnSendGame.TabIndex = 2;
-            this.btnSendGame.Text = "Send Game";
+            this.btnSendGame.Text = "Send Game(s)";
             this.btnSendGame.UseVisualStyleBackColor = true;
             this.btnSendGame.Click += new System.EventHandler(this.btnSendGame_Click);
             // 
@@ -181,36 +211,6 @@
             // printDialog1
             // 
             this.printDialog1.UseEXDialog = true;
-            // 
-            // cboCountry
-            // 
-            this.cboCountry.FormattingEnabled = true;
-            this.cboCountry.Items.AddRange(new object[] {
-            "USA",
-            "EUR",
-            "TWN",
-            "JPN",
-            "KOR",
-            "ITA",
-            "FRA",
-            "GER",
-            "CHN"});
-            this.cboCountry.Location = new System.Drawing.Point(31, 207);
-            this.cboCountry.Name = "cboCountry";
-            this.cboCountry.Size = new System.Drawing.Size(275, 21);
-            this.cboCountry.TabIndex = 5;
-            this.cboCountry.Text = "USA";
-            this.cboCountry.SelectedIndexChanged += new System.EventHandler(this.cboCountry_SelectedIndexChanged);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(9, 178);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(101, 13);
-            this.label1.TabIndex = 6;
-            this.label1.Text = "Country Preference:";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // frmMKEllie
             // 

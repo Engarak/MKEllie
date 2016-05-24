@@ -1,3 +1,5 @@
+***License found in the Data directory of the install***
+
 		   -----MKEllie LICENSE--------
 
                     GNU GENERAL PUBLIC LICENSE
@@ -298,3 +300,6 @@ http://www.graphicsfuel.com/2013/04/20-flat-icons-psd/
 		   -----DATABASE THANKS TO --------   	
 GBATemp - Community - https://gbatemp.net
 Madridi - Database Curator - https://gbatemp.net/members/madridi.124719/
+
+	 	   -----BOX ART THANKS TO-----
+GameTDB - http://gametdb.com
